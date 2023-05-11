@@ -32,11 +32,11 @@ def films_genres_afficher(id_film_sel):
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
-                strsql_genres_films_afficher_data = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
+                strsql_genres_films_afficher_data = """SELECT id_titre_son, titre, album, artiste, duree,
                                                             GROUP_CONCAT(intitule_genre) as GenresFilms FROM t_genre_film
-                                                            RIGHT JOIN t_film ON t_film.id_film = t_genre_film.fk_film
-                                                            LEFT JOIN t_genre ON t_genre.id_genre = t_genre_film.fk_genre
-                                                            GROUP BY id_film"""
+                                                            RIGHT JOIN t_son ON t_son.id_titre_son = t_son.fk_son
+                                                            LEFT JOIN t_tags ON t_tags.id_tags = t_son.fk_tags
+                                                            GROUP BY id_titre_son"""
                 if id_film_sel == 0:
                     # le paramètre 0 permet d'afficher tous les films
                     # Sinon le paramètre représente la valeur de l'id du film
@@ -93,7 +93,7 @@ def edit_genre_film_selected():
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
-                strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genre ORDER BY id_genre ASC"""
+                strsql_genres_afficher = """SELECT id_tags, tag FROM t_tags ORDER BY id_tags ASC"""
                 mc_afficher.execute(strsql_genres_afficher)
             data_genres_all = mc_afficher.fetchall()
             print("dans edit_genre_film_selected ---> data_genres_all", data_genres_all)
@@ -121,20 +121,20 @@ def edit_genre_film_selected():
                 genres_films_afficher_data(valeur_id_film_selected_dictionnaire)
 
             print(data_genre_film_selected)
-            lst_data_film_selected = [item['id_film'] for item in data_genre_film_selected]
+            lst_data_film_selected = [item['id_titre_son'] for item in data_genre_film_selected]
             print("lst_data_film_selected  ", lst_data_film_selected,
                   type(lst_data_film_selected))
 
             # Dans le composant "tags-selector-tagselect" on doit connaître
             # les genres qui ne sont pas encore sélectionnés.
-            lst_data_genres_films_non_attribues = [item['id_genre'] for item in data_genres_films_non_attribues]
+            lst_data_genres_films_non_attribues = [item['id_tags'] for item in data_genres_films_non_attribues]
             session['session_lst_data_genres_films_non_attribues'] = lst_data_genres_films_non_attribues
             print("lst_data_genres_films_non_attribues  ", lst_data_genres_films_non_attribues,
                   type(lst_data_genres_films_non_attribues))
 
             # Dans le composant "tags-selector-tagselect" on doit connaître
             # les genres qui sont déjà sélectionnés.
-            lst_data_genres_films_old_attribues = [item['id_genre'] for item in data_genres_films_attribues]
+            lst_data_genres_films_old_attribues = [item['id_tags'] for item in data_genres_films_attribues]
             session['session_lst_data_genres_films_old_attribues'] = lst_data_genres_films_old_attribues
             print("lst_data_genres_films_old_attribues  ", lst_data_genres_films_old_attribues,
                   type(lst_data_genres_films_old_attribues))
@@ -147,7 +147,7 @@ def edit_genre_film_selected():
 
             # Extrait les valeurs contenues dans la table "t_genres", colonne "intitule_genre"
             # Le composant javascript "tagify" pour afficher les tags n'a pas besoin de l'id_genre
-            lst_data_genres_films_non_attribues = [item['intitule_genre'] for item in data_genres_films_non_attribues]
+            lst_data_genres_films_non_attribues = [item['tag'] for item in data_genres_films_non_attribues]
             print("lst_all_genres gf_edit_genre_film_selected ", lst_data_genres_films_non_attribues,
                   type(lst_data_genres_films_non_attribues))
 
@@ -221,7 +221,7 @@ def update_genre_film_selected():
 
             # SQL pour insérer une nouvelle association entre
             # "fk_film"/"id_film" et "fk_genre"/"id_genre" dans la "t_genre_film"
-            strsql_insert_genre_film = """INSERT INTO t_genre_film (id_genre_film, fk_genre, fk_film)
+            strsql_insert_genre_film = """INSERT INTO t_son_avoir_tags (id_son_avoir_tags, fk_son, fk_tags)
                                                     VALUES (NULL, %(value_fk_genre)s, %(value_fk_film)s)"""
 
             # SQL pour effacer une (des) association(s) existantes entre "id_film" et "id_genre" dans la "t_genre_film"
