@@ -33,9 +33,9 @@ def films_genres_afficher(id_film_sel):
         try:
             with DBconnection() as mc_afficher:
                 strsql_genres_films_afficher_data = """SELECT id_titre_son, titre, album, artiste, duree,
-                                                            GROUP_CONCAT(intitule_genre) as GenresFilms FROM t_genre_film
-                                                            RIGHT JOIN t_son ON t_son.id_titre_son = t_son.fk_son
-                                                            LEFT JOIN t_tags ON t_tags.id_tags = t_son.fk_tags
+                                                            GROUP_CONCAT(tag) as GenresFilms FROM t_son_avoir_tags
+                                                            RIGHT JOIN t_son ON t_son.id_titre_son = t_son_avoir_tags.fk_son
+                                                            LEFT JOIN t_tags ON t_tags.id_tags = t_son_avoir_tags.fk_tags
                                                             GROUP BY id_titre_son"""
                 if id_film_sel == 0:
                     # le paramètre 0 permet d'afficher tous les films
@@ -222,10 +222,10 @@ def update_genre_film_selected():
             # SQL pour insérer une nouvelle association entre
             # "fk_film"/"id_film" et "fk_genre"/"id_genre" dans la "t_genre_film"
             strsql_insert_genre_film = """INSERT INTO t_son_avoir_tags (id_son_avoir_tags, fk_son, fk_tags)
-                                                    VALUES (NULL, %(value_fk_genre)s, %(value_fk_film)s)"""
+                                                    VALUES (NULL, %(value_fk_tags)s, %(value_fk_son)s)"""
 
             # SQL pour effacer une (des) association(s) existantes entre "id_film" et "id_genre" dans la "t_genre_film"
-            strsql_delete_genre_film = """DELETE FROM t_genre_film WHERE fk_genre = %(value_fk_genre)s AND fk_film = %(value_fk_film)s"""
+            strsql_delete_genre_film = """DELETE FROM t_son_avoir_tags WHERE fk_tags = %(value_fk_tags)s AND fk_son = %(value_fk_son)s"""
 
             with DBconnection() as mconn_bd:
                 # Pour le film sélectionné, parcourir la liste des genres à INSÉRER dans la "t_genre_film".
@@ -233,8 +233,8 @@ def update_genre_film_selected():
                 for id_genre_ins in lst_diff_genres_insert_a:
                     # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                     # et "id_genre_ins" (l'id du genre dans la liste) associé à une variable.
-                    valeurs_film_sel_genre_sel_dictionnaire = {"value_fk_film": id_film_selected,
-                                                               "value_fk_genre": id_genre_ins}
+                    valeurs_film_sel_genre_sel_dictionnaire = {"value_fk_son": id_film_selected,
+                                                               "value_fk_tags": id_genre_ins}
 
                     mconn_bd.execute(strsql_insert_genre_film, valeurs_film_sel_genre_sel_dictionnaire)
 
@@ -243,8 +243,8 @@ def update_genre_film_selected():
                 for id_genre_del in lst_diff_genres_delete_b:
                     # Constitution d'un dictionnaire pour associer l'id du film sélectionné avec un nom de variable
                     # et "id_genre_del" (l'id du genre dans la liste) associé à une variable.
-                    valeurs_film_sel_genre_sel_dictionnaire = {"value_fk_film": id_film_selected,
-                                                               "value_fk_genre": id_genre_del}
+                    valeurs_film_sel_genre_sel_dictionnaire = {"value_fk_son": id_film_selected,
+                                                               "value_fk_tags": id_genre_del}
 
                     # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
                     # la subtilité consiste à avoir une méthode "execute" dans la classe "DBconnection"
@@ -276,20 +276,20 @@ def genres_films_afficher_data(valeur_id_film_selected_dict):
     print("valeur_id_film_selected_dict...", valeur_id_film_selected_dict)
     try:
 
-        strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_genre) as GenresFilms FROM t_genre_film
-                                        INNER JOIN t_film ON t_film.id_film = t_genre_film.fk_film
-                                        INNER JOIN t_genre ON t_genre.id_genre = t_genre_film.fk_genre
+        strsql_film_selected = """SELECT id_titre_son, titre, album, artiste, duree, GROUP_CONCAT(id_tags) as GenresFilms FROM t_son_avoir_tags
+                                        INNER JOIN t_son ON t_son.id_titre_son = t_son_avoir_tags.fk_son
+                                        INNER JOIN t_tags ON t_tags.id_tags = t_son_avoir_tags.fk_tags
                                         WHERE id_film = %(value_id_film_selected)s"""
 
-        strsql_genres_films_non_attribues = """SELECT id_genre, intitule_genre FROM t_genre WHERE id_genre not in(SELECT id_genre as idGenresFilms FROM t_genre_film
-                                                    INNER JOIN t_film ON t_film.id_film = t_genre_film.fk_film
-                                                    INNER JOIN t_genre ON t_genre.id_genre = t_genre_film.fk_genre
-                                                    WHERE id_film = %(value_id_film_selected)s)"""
+        strsql_genres_films_non_attribues = """SELECT id_tags, tag FROM t_tags WHERE id_tags not in(SELECT id_tags as idGenresFilms FROM t_son_avoir_tags
+                                                    INNER JOIN t_son ON t_son.id_titre_son = t_son_avoir_tags.fk_son
+                                                    INNER JOIN t_son ON t_son.id_tags = t_son_avoir_tags.fk_tags
+                                                    WHERE id_son = %(value_id_film_selected)s)"""
 
-        strsql_genres_films_attribues = """SELECT id_film, id_genre, intitule_genre FROM t_genre_film
-                                            INNER JOIN t_film ON t_film.id_film = t_genre_film.fk_film
-                                            INNER JOIN t_genre ON t_genre.id_genre = t_genre_film.fk_genre
-                                            WHERE id_film = %(value_id_film_selected)s"""
+        strsql_genres_films_attribues = """SELECT id_son, id_tags, tag FROM t_son_avoir_tags
+                                            INNER JOIN t_son ON t_son.id_titre_son = t_son_avoir_tags.fk_son 
+                                            INNER JOIN t_tags ON t_tags.id_tags = t_son_avoir_tags.fk_tags
+                                            WHERE id_son = %(value_id_film_selected)s"""
 
         # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
         with DBconnection() as mc_afficher:
