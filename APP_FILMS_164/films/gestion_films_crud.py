@@ -87,23 +87,23 @@ def film_update_wtf():
             # Récupèrer la valeur du champ depuis "genre_update_wtf.html" après avoir cliqué sur "SUBMIT".
             nom_film_update = form_update_film.nom_film_update_wtf.data
             duree_film_update = form_update_film.duree_film_update_wtf.data
-            description_film_update = form_update_film.description_film_update_wtf.data
-            cover_link_film_update = form_update_film.cover_link_film_update_wtf.data
-            datesortie_film_update = form_update_film.datesortie_film_update_wtf.data
+            #description_film_update = form_update_film.description_film_update_wtf.data
+            #cover_link_film_update = form_update_film.cover_link_film_update_wtf.data
+            #datesortie_film_update = form_update_film.datesortie_film_update_wtf.data
 
             valeur_update_dictionnaire = {"value_id_film": id_film_update,
                                           "value_nom_film": nom_film_update,
                                           "value_duree_film": duree_film_update,
-                                          "value_description_film": description_film_update,
-                                          "value_cover_link_film": cover_link_film_update,
-                                          "value_datesortie_film": datesortie_film_update
+                                          #"value_description_film": description_film_update,
+                                          #"value_cover_link_film": cover_link_film_update,
+                                          #"value_datesortie_film": datesortie_film_update
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
             str_sql_update_nom_film = """UPDATE t_son SET titre = %(value_nom_film)s,
                                                             duree = %(value_duree_film)s,
-                                                            cover = %(value_cover_link_film)s,
                                                             WHERE id_titre_son = %(value_id_film)s"""
+                                                            #cover = %(value_cover_link_film)s,
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_nom_film, valeur_update_dictionnaire)
 
@@ -128,10 +128,10 @@ def film_update_wtf():
             form_update_film.nom_film_update_wtf.data = data_film["titre"]
             form_update_film.duree_film_update_wtf.data = data_film["duree"]
             # Debug simple pour contrôler la valeur dans la console "run" de PyCharm
-            print(f" duree film  ", data_film["duree_film"], "  type ", type(data_film["duree_film"]))
-            form_update_film.description_film_update_wtf.data = data_film["description_film"]
-            form_update_film.cover_link_film_update_wtf.data = data_film["cover_link_film"]
-            form_update_film.datesortie_film_update_wtf.data = data_film["date_sortie_film"]
+            print(f" duree film  ", data_film["duree"], "  type ", type(data_film["duree"]))
+            #form_update_film.description_film_update_wtf.data = data_film["description_film"]
+            #form_update_film.cover_link_film_update_wtf.data = data_film["cover_link_film"]
+            #form_update_film.datesortie_film_update_wtf.data = data_film["date_sortie_film"]
 
     except Exception as Exception_film_update_wtf:
         raise ExceptionFilmUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
