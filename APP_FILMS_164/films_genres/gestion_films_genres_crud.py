@@ -46,7 +46,7 @@ def films_genres_afficher(id_film_sel):
                     valeur_id_film_selected_dictionnaire = {"value_id_film_selected": id_film_sel}
                     # En MySql l'instruction HAVING fonctionne comme un WHERE... mais doit être associée à un GROUP BY
                     # L'opérateur += permet de concaténer une nouvelle valeur à la valeur de gauche préalablement définie.
-                    strsql_genres_films_afficher_data += """ HAVING id_film= %(value_id_film_selected)s"""
+                    strsql_genres_films_afficher_data += """ HAVING id_titre_son= %(value_id_film_selected)s"""
 
                     mc_afficher.execute(strsql_genres_films_afficher_data, valeur_id_film_selected_dictionnaire)
 
@@ -222,10 +222,10 @@ def update_genre_film_selected():
             # SQL pour insérer une nouvelle association entre
             # "fk_film"/"id_film" et "fk_genre"/"id_genre" dans la "t_genre_film"
             strsql_insert_genre_film = """INSERT INTO t_son_avoir_tags (id_son_avoir_tags, fk_son, fk_tags)
-                                                    VALUES (NULL, %(value_fk_tags)s, %(value_fk_son)s)"""
+                                                    VALUES (NULL, %(value_fk_genre)s, %(value_fk_film)s)"""
 
             # SQL pour effacer une (des) association(s) existantes entre "id_film" et "id_genre" dans la "t_genre_film"
-            strsql_delete_genre_film = """DELETE FROM t_son_avoir_tags WHERE fk_tags = %(value_fk_tags)s AND fk_son = %(value_fk_son)s"""
+            strsql_delete_genre_film = """DELETE FROM t_son_avoir_tags WHERE fk_tags = %(value_fk_tags)s AND fk_son = %(value_fk_film)s"""
 
             with DBconnection() as mconn_bd:
                 # Pour le film sélectionné, parcourir la liste des genres à INSÉRER dans la "t_genre_film".
