@@ -32,7 +32,7 @@ def films_genres_afficher(id_film_sel):
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
-                strsql_genres_films_afficher_data = """SELECT id_titre_son, titre, album, artiste, duree,
+                strsql_genres_films_afficher_data = """SELECT id_titre_son, titre, album, artiste, duree, coverlink,
                                                             GROUP_CONCAT(tag) as GenresFilms FROM t_son_avoir_tags
                                                             RIGHT JOIN t_son ON t_son.id_titre_son = t_son_avoir_tags.fk_son
                                                             LEFT JOIN t_tags ON t_tags.id_tags = t_son_avoir_tags.fk_tags
@@ -276,7 +276,7 @@ def genres_films_afficher_data(valeur_id_film_selected_dict):
     print("valeur_id_film_selected_dict...", valeur_id_film_selected_dict)
     try:
 
-        strsql_film_selected = """SELECT id_titre_son, titre, album, artiste, duree, GROUP_CONCAT(id_tags) as GenresFilms FROM t_son_avoir_tags
+        strsql_film_selected = """SELECT id_titre_son, titre, album, artiste, duree, coverlink, GROUP_CONCAT(id_tags) as GenresFilms FROM t_son_avoir_tags
                                         INNER JOIN t_son ON t_son.id_titre_son = t_son_avoir_tags.fk_son
                                         INNER JOIN t_tags ON t_tags.id_tags = t_son_avoir_tags.fk_tags
                                         WHERE id_film = %(value_id_film_selected)s"""

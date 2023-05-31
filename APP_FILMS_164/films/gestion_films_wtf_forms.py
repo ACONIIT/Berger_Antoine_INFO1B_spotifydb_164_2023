@@ -24,8 +24,21 @@ class FormWTFAddFilm(FlaskForm):
                                                                               "d'espace à double, de double "
                                                                               "apostrophe, de double trait union")
                                                                ])
+    duree_film_add_wtf = IntegerField("Durée du son", validators=[NumberRange(min=1, max=5000,
+                                                                                 message=u"Min %(min)d et "
+                                                                                         u"max %(max)d "
+                                                                                         u"Selon Wikipédia "
+                                                                                         u"L'Incendie du "
+                                                                                         u"monastère du "
+                                                                                         u"Lotus rouge "
+                                                                                         u"durée 1620 "
+                                                                                         u"min")])
 
-    submit = SubmitField("Enregistrer film")
+    description_film_add_wtf = StringField("artiste ", widget=TextArea())
+    cover_link_film_add_wtf = StringField("Lien cover ", widget=TextArea())
+    datesortie_film_add_wtf = DateField("Date de sortie du film", validators=[InputRequired("Date obligatoire"),
+                                                                                 DataRequired("Date non valide")])
+    submit = SubmitField("Enregistrer Son")
 
 
 class FormWTFUpdateFilm(FlaskForm):
