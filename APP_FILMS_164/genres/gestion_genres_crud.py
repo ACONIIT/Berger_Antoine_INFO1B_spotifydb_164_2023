@@ -103,10 +103,12 @@ def genres_ajouter_wtf():
             if form.validate_on_submit():
                 name_genre_wtf = form.nom_genre_wtf.data
                 name_genre = name_genre_wtf.lower()
-                valeurs_insertion_dictionnaire = {"value_intitule_genre": name_genre}
+                date_genre_essai = form.date_genre_wtf_essai.data
+                valeurs_insertion_dictionnaire = {"value_intitule_genre": name_genre,
+                                                  "value_date_genre_essai": date_genre_essai}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_genre = """INSERT INTO t_tags (id_tags, tag) VALUES (NULL,%(value_intitule_genre)s) """
+                strsql_insert_genre = """INSERT INTO t_tags (id_tags, tag, date_ins_tag) VALUES (NULL,%(value_intitule_genre)s,%(value_date_genre_essai)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
 
@@ -268,7 +270,7 @@ def genre_delete_wtf():
             # Requête qui affiche tous les films_genres qui ont le genre que l'utilisateur veut effacer
             str_sql_genres_films_delete = """SELECT id_son_avoir_tags, titre, id_tags, tag FROM t_son_avoir_tags
                                             INNER JOIN t_son ON t_son_avoir_tags.fk_son = t_son.id_titre_son
-                                            INNER JOIN t_tags ON t_son-avoir_tags.fk_tags = t_tags.id_tags
+                                            INNER JOIN t_tags ON t_son_avoir_tags.fk_tags = t_tags.id_tags
                                             WHERE fk_tags = %(value_id_genre)s"""
 
             with DBconnection() as mydb_conn:
@@ -281,17 +283,17 @@ def genre_delete_wtf():
                 session['data_films_attribue_genre_delete'] = data_films_attribue_genre_delete
 
                 # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-                str_sql_id_genre = "SELECT id_genre, intitule_genre FROM t_genre WHERE id_genre = %(value_id_genre)s"
+                str_sql_id_genre = "SELECT id_tags, tag FROM t_tags WHERE id_tags = %(value_id_genre)s"
 
                 mydb_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
                 # Une seule valeur est suffisante "fetchone()",
                 # vu qu'il n'y a qu'un seul champ "nom genre" pour l'action DELETE
                 data_nom_genre = mydb_conn.fetchone()
                 print("data_nom_genre ", data_nom_genre, " type ", type(data_nom_genre), " genre ",
-                      data_nom_genre["intitule_genre"])
+                      data_nom_genre["tag"])
 
             # Afficher la valeur sélectionnée dans le champ du formulaire "genre_delete_wtf.html"
-            form_delete.nom_genre_delete_wtf.data = data_nom_genre["intitule_genre"]
+            form_delete.nom_genre_delete_wtf.data = data_nom_genre["tag"]
 
             # Le bouton pour l'action "DELETE" dans le form. "genre_delete_wtf.html" est caché.
             btn_submit_del = False

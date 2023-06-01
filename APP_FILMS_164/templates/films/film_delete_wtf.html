@@ -36,24 +36,24 @@
 				<tbody>
 				<tr>
 					<th class="align-middle">
-						{{ row.id_film }}
+						{{ row.id_titre_son }}
 					</th>
 					<th class="align-middle">
-						{{ row.nom_film }}
+						{{ row.titre }}
 					</th>
 					<th class="align-middle">
-						{{ row.duree_film|default("", True) }}
+						{{ row.duree|default("", True) }}
 					</th>
 					<th class="align-middle">
-						{{ row.date_sortie_film|default("", True) }}
+						{{ row.album|default("", True) }}
 					</th>
 					<th class="align-middle">
-						{{ row.description_film|default("", True) }}
+						{{ row.artiste|default("", True) }}
 					</th>
 					<th class="align-middle">
-						<img class="img" src={{ row.cover_link_film|default(None, True) }}
+						<img class="img" src={{ row.coverlink|default(None, True) }}
 							 style="border: 0;display:block; width:150px; max-height:auto;"
-							 alt="image masquée FFP8 (in COVID-19 Memory) (absente) mod 164">
+							 alt="image">
 					</th>
 
 				<tr>

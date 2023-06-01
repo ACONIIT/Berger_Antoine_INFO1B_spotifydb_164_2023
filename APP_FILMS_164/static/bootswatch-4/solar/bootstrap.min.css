@@ -80,8 +80,7 @@ hr{
     margin:1rem 0;
     color:inherit;
     background-color:currentColor;
-    border:0;
-    opacity:.25
+    border-color: #B0C4DE;
 }
 hr:not([size]){
     height:1px
@@ -1613,7 +1612,7 @@ progress{
     --bs-table-hover-bg:rgba(255, 255, 255, 0.075);
     width:100%;
     margin-bottom:1rem;
-    color:#7CFC00;
+    color:#00BFFF;
     vertical-align:top;
     border-color:#FFFFFF
 }
@@ -2581,27 +2580,25 @@ textarea.form-control-lg{
 }
 .btn-primary{
     color:#fff;
-    background-color:#b32400;
-    border-color:#32CD32
 }
 .btn-primary:hover{
     color:#fff;
-    background-color:#9a7400;
-    border-color:#916e00
+    background-color:#708090;
+    border-color:#708090
 }
 .btn-check:focus+.btn-primary,.btn-primary:focus{
     color:#fff;
-    background-color:#9a7400;
-    border-color:#916e00;
-    box-shadow:0 0 0 .25rem rgba(192,155,38,.5)
+    background-color:#708090;
+    border-color:#708090;
+
 }
 .btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{
     color:#fff;
-    background-color:#916e00;
-    border-color:#886700
+    background-color:#708090;
+    border-color:#708090;
 }
 .btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{
-    box-shadow:0 0 0 .25rem rgba(192,155,38,.5)
+
 }
 .btn-primary.disabled,.btn-primary:disabled{
     color:#fff;
@@ -3315,12 +3312,12 @@ textarea.form-control-lg{
     color:#839496
 }
 .dropdown-menu-dark{
-    color:#dee2e6;
-    background-color:#073642;
+    color:#191970;
+    background-color:#191970;
     border-color:rgba(0,0,0,.15)
 }
 .dropdown-menu-dark .dropdown-item{
-    color:#dee2e6
+    color:#FFFFFF
 }
 .dropdown-menu-dark .dropdown-item:focus,.dropdown-menu-dark .dropdown-item:hover{
     color:#fff;
@@ -4002,7 +3999,7 @@ textarea.form-control-lg{
     color:#fff
 }
 .navbar-dark .navbar-nav .nav-link{
-    color:rgba(255,255,255,.55)
+    color:rgba(255,255,255)
 }
 .navbar-dark .navbar-nav .nav-link:focus,.navbar-dark .navbar-nav .nav-link:hover{
     color:rgba(255,255,255,.75)
@@ -9875,7 +9872,7 @@ textarea.form-control-lg{
     }
 }
 .btn-primary{
-    background-color:#32CD32
+
 }
 .btn-secondary{
     background-color:#839496
