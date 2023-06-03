@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 {% block title %} Afficher SONS {% endblock %}
+{% block Ajouterbouton %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+            <table class="table table-bordered table-sm">
+				<td class="text-left">
+							<a class="btn btn-primary" href="{{ url_for('film_add_wtf') }}" role="button"><strong>AJOUTER</strong></a>
+				</td><br>
+			</table><br>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
 {% block body %}
 <div class="container">
 	<div class="col-md-12">
@@ -48,9 +62,6 @@
 					  </th>
 					  <th class="align-middle">
 						<img class="img" src={{ row.coverlink|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;"  alt = "image">
-					  </th>
-					  <th class="align-middle">
-						<a class="btn btn-primary" href="{{ url_for('film_add_wtf') }}" role="button">Ajouter</a>
 					  </th>
 					  <th class="align-middle">
 						<a class="btn btn-warning" href="{{ url_for('film_update_wtf', id_film_btn_edit_html=row.id_titre_son) }}" role="button">Edit</a>

@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 {% block title %} Afficher TAGS {% endblock %}
+{% block Ajouterbouton %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+            <table class="table table-bordered table-sm">
+				<td class="text-left">
+							<a class="btn btn-primary" href="{{ url_for('genres_ajouter_wtf') }}" role="button"><strong>AJOUTER</strong></a>
+				</td><br>
+			</table><br>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
 {% block body %}
 <div class="container">
 	<div class="row">
@@ -17,12 +31,7 @@
                         <th class="align-middle">
 							Date insertion
                         </th>
-                        <th class="align-middle">
 
-                        </th>
-                        <th class="align-middle">
-
-                        </th>
                     </tr>
                 </thead>
             {% endif %}
@@ -38,9 +47,6 @@
 						</td>
 						<td class="align-middle">
 							{{ row.date_ins_tag }}
-						</td>
-						<td class="text-center" class="align-middle">
-							<a class="btn btn-primary" href="{{ url_for('genres_ajouter_wtf') }}" role="button">Ajouter</a>
 						</td>
 						<td class="text-center" class="align-middle">
 							<a class="btn btn-warning" href="{{ url_for('genre_update_wtf', id_genre_btn_edit_html=row.id_tags) }}" role="button">Edit</a>
@@ -67,4 +73,3 @@
 	</div>
 </div>
 {% endblock %}
-

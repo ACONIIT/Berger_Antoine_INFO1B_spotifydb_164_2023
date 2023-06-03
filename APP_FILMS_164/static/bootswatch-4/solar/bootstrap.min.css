@@ -70,7 +70,7 @@ body{
     font-size:var(--bs-body-font-size);
     font-weight:var(--bs-body-font-weight);
     line-height:var(--bs-body-line-height);
-    color:var(--bs-body-color);
+    color:#fff;
     text-align:var(--bs-body-text-align);
     background-color:var(--bs-body-bg);
     -webkit-text-size-adjust:100%;
@@ -271,10 +271,13 @@ button:focus:not(:focus-visible){
     outline:0
 }
 button,input,optgroup,select,textarea{
+    background-color: lightsteelblue;
+    border-radius: 0.25rem;
     margin:0;
     font-family:inherit;
     font-size:inherit;
     line-height:inherit
+
 }
 button,select{
     text-transform:none
@@ -302,7 +305,7 @@ select:disabled{
     border-style:none
 }
 textarea{
-    resize:vertical
+    resize:none
 }
 fieldset{
     min-width:0;
@@ -2694,8 +2697,7 @@ textarea.form-control-lg{
 }
 .btn-warning{
     color:#fff;
-    background-color:#cb4b16;
-    border-color:#cb4b16
+    border-color:#FF00FF;
 }
 .btn-warning:hover{
     color:#fff;
@@ -2723,8 +2725,7 @@ textarea.form-control-lg{
 }
 .btn-danger{
     color:#fff;
-    background-color:#d33682;
-    border-color:#d33682
+    border-color:#FF0000;
 }
 .btn-danger:hover{
     color:#fff;
@@ -9872,7 +9873,7 @@ textarea.form-control-lg{
     }
 }
 .btn-primary{
-
+    background-color: #483D8B;
 }
 .btn-secondary{
     background-color:#839496
@@ -9884,10 +9885,10 @@ textarea.form-control-lg{
     background-color:#268bd2
 }
 .btn-warning{
-    background-color:#cb4b16
+
 }
 .btn-danger{
-    background-color:#d33682
+
 }
 .btn-light{
     background-color:#fdf6e3

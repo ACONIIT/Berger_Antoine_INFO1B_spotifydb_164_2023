@@ -192,7 +192,7 @@ def film_delete_wtf():
             data_film_delete = session['data_film_delete']
             print("data_film_delete ", data_film_delete)
 
-            flash(f"Effacer le film de façon définitive de la BD !!!", "danger")
+            flash(f"Effacer ce SON de façon définitive !!", "danger")
             # L'utilisateur vient de cliquer sur le bouton de confirmation pour effacer...
             # On affiche le bouton "Effacer genre" qui va irrémédiablement EFFACER le genre
             btn_submit_del = True
@@ -210,8 +210,8 @@ def film_delete_wtf():
                 mconn_bd.execute(str_sql_delete_fk_film_genre, valeur_delete_dictionnaire)
                 mconn_bd.execute(str_sql_delete_film, valeur_delete_dictionnaire)
 
-            flash(f"Film définitivement effacé !!", "success")
-            print(f"Film définitivement effacé !!")
+            flash(f"SON définitivement effacé !!", "success")
+            print(f"SON définitivement effacé !!")
 
             # afficher les données
             return redirect(url_for('films_genres_afficher', id_film_sel=0))

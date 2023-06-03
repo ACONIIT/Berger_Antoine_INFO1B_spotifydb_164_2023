@@ -3,10 +3,10 @@
 {% block body %}
 <div class="container">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-12"><br>
 			<p>
 				modifier tag
-			</p>
+			</p><br>
 			<form action="" method="POST" novalidate>
 				<!-- Protection contre les attaques Cross-Site Request Forgery (CSRF) -->
 				{{ form_update.hidden_tag() }}
@@ -24,7 +24,7 @@
 						{% for error in form_update.date_genre_wtf_essai.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
-					</p>
+					</p><br>
 				</div>
 				{{ form_update.submit(class="btn btn-primary") }}
 			</form>
