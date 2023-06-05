@@ -17,15 +17,16 @@ class FormWTFAddFilm(FlaskForm):
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     nom_film_regexp = ""
-    nom_film_add_wtf = StringField("Titre ", validators=[Length(min=2, max=2000, message="min 2 max 20"),
+    nom_film_add_wtf = StringField("Titre ", validators=[Length(min=2, max=2000, message="min 2 max 50"),
                                                          Regexp(nom_film_regexp, )])
 
     duree_film_add_wtf = IntegerField("Durée ", validators=[NumberRange(min=1, max=5000)])
 
 
-    description_film_add_wtf = StringField("Artiste ", widget=TextArea())
+    description_film_add_wtf = StringField("Artiste ", validators=[Length(min=2, max=2000, message="min 2 max 50"),
+                                                               Regexp(nom_film_regexp,)])
     cover_link_film_add_wtf = StringField("Lien Cover ", widget=TextArea())
-    datesortie_film_add_wtf = StringField("Album ", validators=[Length(min=2, max=2000, message="min 2 max 20"),
+    datesortie_film_add_wtf = StringField("Album ", validators=[Length(min=2, max=2000, message="min 2 max 50"),
                                                                Regexp(nom_film_regexp,)])
     submit = SubmitField("Enregistrer Son")
 
